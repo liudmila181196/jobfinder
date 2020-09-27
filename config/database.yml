@@ -1,0 +1,30 @@
+#
+#   gem install pg
+#
+#
+#   gem 'pg'
+#
+default: &default
+  host: localhost
+  adapter: postgresql
+  encoding: UTF8
+  username: jobfinder
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  timeout: 5000
+  reaping_frequency: 30
+
+development:
+  <<: *default
+  database: jobfinder_development
+  password: <%= Rails.application.secrets[:database][:password] %>
+
+test:
+  <<: *default
+  database: jobfinder_test
+  password: <%= Rails.application.secrets[:database][:password] %>
+
+production:
+  <<: *default
+  database: jobfinder_production
+  password: <%= ENV['EXERCISE_DATABASE_PASSWORD'] %>
+
